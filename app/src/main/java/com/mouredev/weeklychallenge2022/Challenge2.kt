@@ -20,5 +20,14 @@ package com.mouredev.weeklychallenge2022
  */
 
 fun main() {
-
+    val fibonacci: MutableList<Long> = mutableListOf()
+    for (i in 0L..50L) {
+        val number = if (i < 2) {
+            i
+        } else {
+            fibonacci.last() + fibonacci[fibonacci.size - 2]
+        }
+        fibonacci.add(number)
+    }
+    print(fibonacci)
 }
