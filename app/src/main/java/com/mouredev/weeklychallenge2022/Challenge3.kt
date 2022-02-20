@@ -19,5 +19,19 @@ package com.mouredev.weeklychallenge2022
  */
 
 fun main() {
+    for (i in 1..100) {
+        if (isPrimeNumber(i)){
+            println(i)
+        }
+    }
+}
 
+private fun isPrimeNumber(number: Int): Boolean {
+    var isPrime = true
+    for (i in 1..number) {
+        if (isPrime && i != 1 && i != number) {
+            isPrime = number % i != 0
+        }
+    }
+    return isPrime
 }
