@@ -19,4 +19,35 @@ package com.mouredev.weeklychallenge2022
  * - Subiré una posible solución al ejercicio el lunes siguiente al de su publicación.
  *
  */
+sealed class Polygon{
+    data class Triangle(
+        val base: Int,
+        val height: Int
+    ) : Polygon()
+
+    data class Square(
+        val side: Int
+    ): Polygon()
+
+    data class Rectangle(
+        val base: Int,
+        val height: Int
+    ) : Polygon()
+}
+
+fun main(){
+    val rectangle = Polygon.Rectangle(15, 7)
+    println("Rectangle with $rectangle area is ${calculateArea(rectangle)}")
+    val triangle = Polygon.Triangle(12, 15)
+    println("Triangle with $triangle area is ${calculateArea(triangle)}")
+    val square = Polygon.Square(12)
+    println("Square with $square area is ${calculateArea(square)}")
+}
+
+private fun calculateArea(polygon: Polygon) : Int =
+    when(polygon){
+        is Polygon.Rectangle -> polygon.base * polygon.height
+        is Polygon.Square -> polygon.side * polygon.side
+        is Polygon.Triangle -> (polygon.base * polygon.height)/2
+    }
 
