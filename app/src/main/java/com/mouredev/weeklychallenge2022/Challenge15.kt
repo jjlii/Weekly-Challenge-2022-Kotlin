@@ -1,5 +1,12 @@
 package com.mouredev.weeklychallenge2022
 
+import java.lang.IllegalArgumentException
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.math.absoluteValue
+import kotlin.time.Duration.Companion.days
+
 /*
  * Reto #15
  * ¿CUÁNTOS DÍAS?
@@ -21,3 +28,41 @@ package com.mouredev.weeklychallenge2022
  *
  */
 
+
+
+fun main() {
+    println("Welcome to dates difference calculator.")
+    println("Introduce first date: ")
+    val dateOne = readLine()
+    dateOne?.validateDateFormat()
+    println("Introduce second date: ")
+    val dateTwo = readLine()
+    dateTwo?.validateDateFormat()
+    println("The different between $dateOne and $dateTwo is ...")
+    if (dateOne != null && dateTwo != null) {
+        println("${calculateDateDifferences(dateOne.parseToDate(), dateTwo.parseToDate())}")
+    }
+
+}
+
+private fun String.parseToDate(): Date{
+    val dateFormat = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
+    return dateFormat.parse(this)?: throw Exception("Invalid format exception")
+}
+
+
+private fun String.validateDateFormat() :String = if (matches(DATE_REGEX.toRegex())){
+    this
+}else{
+    throw IllegalArgumentException("Not valid date format")
+}
+
+
+private fun calculateDateDifferences(dateOne: Date, dateTwo: Date): Int =
+    TimeUnit.DAYS.convert(
+        dateOne.time - dateTwo.time, TimeUnit.MILLISECONDS
+    ).toInt().absoluteValue
+
+private const val DATE_REGEX = "^([0-2][0-9]|3[0-1])(/)(0[1-9]|1[0-2])\\2(\\d{4})\$"
+
+private const val DATE_FORMAT = "dd/MM/yyyy"
